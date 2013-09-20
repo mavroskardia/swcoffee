@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block extrastyle %}
+	<style>
+		#coffee { margin-top: 1em; }
+		h3 a { display: block; }
+		.wee li { margin-top: 0.5em;}
+	</style>
+{% endblock %}
+
+{% block content %}
+
+<h2>{{order.date}} <small>{{order.team}}</small></h2>
+
+<form method="post" action="{% url 'orders:close' order.id %}" class="well">
+	{% csrf_token %}
+	<fieldset>
+		<legend>
+			Order Totals
+			<input type="submit" class="btn btn-default pull-right" value="Close Order" />
+		</legend>
+		<table class="clearfix">
+			<tbody>
+				<tr><td>Team:</td><td>{{order.team_total|floatformat:2}}</td></tr>
+				<tr><td>Personal:</td><td>{{order.personal_total|floatformat:2}}</td></tr>
+				<tr><td>Grand:</td><td>{{order.grand_total|floatformat:2}}</td></tr>
+			</tbody>
+		</table>
+		<small class="pull-right">(Individual Team Contribution: {{order.team_individual_contribution|floatformat:2}})</small>
+	</fieldset>
+</form>
+
+<ul class="nav nav-tabs">
+	<li class="active"><a href="#coffee" data-toggle="tab">By Coffee</a></li>
+	<li><a href="#person" data-toggle="tab">By Person</a></li>
+</ul>
+
+<div class="tab-content">
+	<section id="coffee" class="tab-pane active in">
+		<div class="panel-group span12">
+			<div class="panel panel-default">
+				<h3 class="panel-title">
+					<a href="#onelb" class="accordion-toggle" data-toggle="collapse" data-parent="coffee_accordion">
+						One Pound Bags
+					</a>
+				</h3>
+				<div id="onelb" class="panel-collapse collapse">
+					<div class="panel-body">
+						<ul class="list-unstyled wee">
+						{% for item in onepounders %}
+							<li>{{item}}</li>
+						{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<h3 class="panel-title">
+					<a href="#twolbs" class="accordion-toggle" data-toggle="collapse" data-parent="coffee_accordion">
+						Two Pound Bags
+					</a>
+				</h3>
+				<div id="twolbs" class="panel-collapse collapse">
+					<div class="panel-body">
+						<ul class="list-unstyled wee">
+						{% for item in twopounders %}
+							<li>{{item}}</li>
+						{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<h3 class="panel-title">
+					<a href="#fivelbs" class="accordion-toggle" data-toggle="collapse" data-parent="coffee_accordion">
+						Five Pound Bags
+					</a>
+				</h3>
+				<div id="fivelbs" class="panel-collapse collapse">
+					<div class="panel-body">
+						<ul class="list-unstyled wee">
+						{% for item in fivepounders %}
+							<li>{{item}}</li>
+						{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="person" class="tab-pane">
+		<ul>
+		{% for items in itemsbyperson %}
+			<li>
+				<h3>{{items.person}}:</h3>
+				<ul>
+				{% for oi in items.items %}
+					<li>
+						{{oi}}
+
+					</li>
+				{% endfor %}
+				</ul>
+			</li>
+		{% endfor %}
+		</ul>
+	</section>
+</div>
+
+{% endblock %}

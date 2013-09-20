@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+
+<h2>{{title}}</h2>
+
+<form class="col-5 col-lg-5" method="post" action="{% url 'orders:teams' %}">
+	{% csrf_token %}
+	<fieldset>
+		{{ tf.non_field_errors }}
+		{% for field in tf %}
+		<div class="form-group">
+			{{ field.label_tag }}
+			{{ field }}
+			{{ field.errors }}
+		</div>
+		{% endfor %}
+		<input type="submit" class="btn btn-large btn-primary" value="Create new Team" />
+	</fieldset>
+</form>
+
+{% if teams %}
+<div class="col-5 col-lg-5">
+	<h3>Existing Teams:</h3>
+	<ul class="nav nav-pills nav-stacked">
+	{% for team in teams %}
+		<li>
+			<span>{{ team.name }}</span>
+			<span>{{ team.description }}</span>
+		</li>
+	{% endfor %}
+	</ul>
+	{% endif %}
+</div>
+{% endblock %}

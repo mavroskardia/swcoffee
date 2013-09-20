@@ -1,0 +1,6 @@
+/* custom.css */
+
+form label { display: block; }
+form input[type=submit] { display: block; }
+
+.errorlist { list-style: none; color: #900; font-style: oblique; padding: 0; margin: 0; }

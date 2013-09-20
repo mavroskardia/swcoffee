@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block extrastyle %}
+	<style>
+		.existing li { padding: 0.5em; border-bottom: solid 1px #ddd; }
+		.existing li strong { display: block; }
+		.existing li img { margin-right: 0.5em; }
+	</style>
+{% endblock %}
+
+{% block content %}
+
+<h2>{{title}}</h2>
+
+<form class="col-5 col-lg-5" method="post" action="{% url 'orders:coffee' %}" enctype="multipart/form-data">
+	{% csrf_token %}
+	<fieldset>
+		{{ cf.non_field_errors }}
+		{% for field in cf %}
+		<div class="form-group">
+			{{ field.label_tag }}
+			{{ field }}
+			{{ field.errors }}
+		</div>
+		{% endfor %}
+		<input type="submit" class="btn btn-large btn-primary" value="Create new Coffee" />
+	</fieldset>
+</form>
+
+{% if coffee %}
+
+<div class="col-7 col-lg-7 existing">
+	<h3>Existing Coffee</h3>
+
+	<ul class="nav nav-pills nav-stacked">
+	{% for c in coffee %}
+		<li class="clearfix">
+			<img class="pull-left" src="{{ c.image_data_url }}" alt="Image of {{c.name}}" width="100" />
+			<strong>{{ c.name }}</strong>
+			<span>{{ c.description }}</span>
+
+			<div class="pull-right">
+				<small>{{ c.one_pound_price }}</small>
+				<small>{{ c.two_pound_price }}</small>
+				<small>{{ c.five_pound_price }}</small>
+			</div>
+		</li>
+	{% endfor %}
+	</ul>
+</div>
+{% endif %}
+
+<form method="post" action="{% url 'orders:generate_coffee' %}">
+	{% csrf_token %}
+	<input type="submit" class="btn btn-info" value="Generate from Sweetwater" />
+</form>
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %}Base Title{% endblock %}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="{% static 'orders/css/bootstrap.css' %}" />
+	<link rel="stylesheet" href="{% static 'orders/css/custom.css' %}" />
+	{% block extrastyle %}{% endblock %}
+</head>
+<body>
+	<nav class="navbar">
+		<div class="container">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+
+			<a href="{% url 'orders:latest' %}" class="navbar-brand">Latest Order</a>
+
+			<div class="nav-collapse collapse navbar-responsive-collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="{% url 'orders:index' %}">Orders</a></li>
+					<li><a href="{% url 'orders:people' %}">People</a></li>
+					<li><a href="{% url 'orders:coffee' %}">Coffee</a></li>
+					<li><a href="{% url 'orders:teams' %}">Teams</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+		<div class="col-12">
+		{% if messages %}
+		<div class="row">
+			<ul class="messages">
+				{% for message in messages %}
+				<li{% if message.tags %} class="{{message.tags}}"{% endif %}>{{message}}</li>
+				{% endfor %}
+			</ul>
+		</div>
+		{% endif %}
+
+		<div class="row">
+		{% block content %}
+		{% endblock %}
+		</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="{% static 'orders/js/jquery.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'orders/js/bootstrap.js' %}"></script>
+
+	{% block extrascript %}{% endblock %}
+</body>
+</html>

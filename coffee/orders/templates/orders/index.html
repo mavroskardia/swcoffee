@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+
+{% if allorders %}
+	<h2>Existing Orders</h2>
+	<ul class="nav nav-pills nav-stacked">
+	{% for order in allorders %}
+		<li>
+			<a href="{% url 'orders:detail' order.id %}">{{ order.name }} ({{order.date}})</a>
+		</li>
+	{% endfor %}
+	</ul>
+{% endif %}
+
+<h2>New Order</h2>
+<form class="col-lg-5 col-5" method="post" action="{% url 'orders:index' %}">
+	{% csrf_token %}
+	<fieldset>
+		{{ orderform.non_field_errors }}
+		{% for field in orderform %}
+		<div class="form-group">
+			{{ field.label_tag }}
+			{{ field }}
+			{{ field.errors }}
+		</div>
+		{% endfor %}
+		<input type="submit" class="btn btn-large btn-primary" value="Create new Order" />
+	</fieldset>
+</form>
+
+{% endblock %}

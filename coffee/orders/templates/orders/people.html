@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+
+<h2>{{title}}</h2>
+<form class="col-lg-5 col-5" method="post" action="{% url 'orders:people' %}">
+	{% csrf_token %}
+	<fieldset>
+		{{ pf.non_field_errors }}
+		{% for field in pf %}
+		<div class="form-group">
+			{{ field.label_tag }}
+			{{ field }}
+			{{ field.errors }}
+		</div>
+		{% endfor %}
+		<input type="submit" class="btn btn-large btn-primary" value="Create new Person" />
+	</fieldset>
+</form>
+
+{% if people %}
+<div class="col-7 col-lg-7">
+	<h3>Existing People</h3>
+	<ul class="nav nav-pills nav-stacked">
+	{% for person in people %}
+		<li>
+			{{ person.name }} ({{ person.team }})
+		</li>
+	{% endfor %}
+	</ul>
+</div>
+{% endif %}
+
+{% endblock %}

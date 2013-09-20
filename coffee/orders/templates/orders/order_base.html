@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>{{order.date}} <small>{{order.team}}</small></h2>
+
+<form method="post" action="{% block form_action %}{% endblock %}" class="well">
+	{% csrf_token %}
+	<fieldset>
+		<legend>
+			Order Totals
+			{% block order_action %}{% endblock %}
+		</legend>
+		<table class="clearfix">
+			<tbody>
+				<tr><td>Team:</td><td>{{order.team_total|floatformat:2}}</td></tr>
+				<tr><td>Personal:</td><td>{{order.personal_total|floatformat:2}}</td></tr>
+				<tr><td>Grand:</td><td>{{order.grand_total|floatformat:2}}</td></tr>
+			</tbody>
+		</table>
+		<small class="pull-right">(Individual Team Contribution: {{order.team_individual_contribution|floatformat:2}})</small>
+	</fieldset>
+</form>
+
+{% block order_content %}
+{% endblock %}
+
+{% endblock %}
