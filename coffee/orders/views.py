@@ -119,9 +119,10 @@ def placed(req, order_id):
 def build_sorted_objects(order):
 
 	class ItemsByPerson:
-		def __init__(self, person):
-			self.person = person
+		def __init__(self, person, order):
+			self.person = person			
 			self.items = []
+			self.order = order
 
 	class ItemsByCoffee:
 		def __init__(self, coffee):
@@ -139,7 +140,7 @@ def build_sorted_objects(order):
 
 	for oi in order.orderitem_set.all():
 		if oi.person.name not in itemsbyperson:
-			itemsbyperson[oi.person.name] = ItemsByPerson(oi.person)
+			itemsbyperson[oi.person.name] = ItemsByPerson(oi.person, order)
 		itemsbyperson[oi.person.name].items.append(oi)
 
 		if oi.coffee.name not in itemsbycoffee:
