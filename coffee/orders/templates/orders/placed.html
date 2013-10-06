@@ -48,11 +48,22 @@
 				</h3>
 				<div id="onelb" class="panel-collapse collapse">
 					<div class="panel-body">
-						<ul class="list-unstyled wee">
+						<table class="table table-hover">	
+							<thead>
+								<tr>
+									<th>Quantity</th><th>Bag Size</th><th>Coffee</th>
+								</tr>
+							</thead>
+							<tbody>
 						{% for item in onepounders %}
-							<li>{{item}}</li>
+								<tr>
+									<td>{{item.quantity}}</td>
+									<td>{{item.size}}</td>
+									<td>{{item.coffee.name}}</td>
+								</tr>
 						{% endfor %}
-						</ul>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
@@ -64,11 +75,22 @@
 				</h3>
 				<div id="twolbs" class="panel-collapse collapse">
 					<div class="panel-body">
-						<ul class="list-unstyled wee">
+						<table class="table table-hover">	
+							<thead>
+								<tr>
+									<th>Quantity</th><th>Bag Size</th><th>Coffee</th>
+								</tr>
+							</thead>
+							<tbody>
 						{% for item in twopounders %}
-							<li>{{item}}</li>
+								<tr>
+									<td>{{item.quantity}}</td>
+									<td>{{item.size}}</td>
+									<td>{{item.coffee.name}}</td>
+								</tr>
 						{% endfor %}
-						</ul>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
@@ -80,11 +102,22 @@
 				</h3>
 				<div id="fivelbs" class="panel-collapse collapse">
 					<div class="panel-body">
-						<ul class="list-unstyled wee">
+						<table class="table table-hover">	
+							<thead>
+								<tr>
+									<th>Quantity</th><th>Bag Size</th><th>Coffee</th>
+								</tr>
+							</thead>
+							<tbody>
 						{% for item in fivepounders %}
-							<li>{{item}}</li>
+								<tr>
+									<td>{{item.quantity}}</td>
+									<td>{{item.size}}</td>
+									<td>{{item.coffee.name}}</td>
+								</tr>
 						{% endfor %}
-						</ul>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
@@ -92,18 +125,22 @@
 	</section>
 
 	<section id="person" class="tab-pane">
-		<ul>
+		<ul class="list-unstyled">
 		{% for items in itemsbyperson %}
 			<li>
-				<h3>{{items.person}}:</h3>
-				<ul>
+				<h3>{{items.person}}</small></h3>
+				<table class="table table-hover">
+					<thead><tr><th>Quantity</th><th>Bag Size</th><th>Coffee</th></tr></thead>
+					<tbody>
 				{% for oi in items.items %}
-					<li>
-						{{oi}}
-
-					</li>
-				{% endfor %}
-				</ul>
+					<tr>
+						<td>{{oi.quantity}}</td>
+						<td>{{oi.size}}</td>
+						<td>{{oi.coffee.name}}</td>
+					</tr>
+ 				{% endfor %}
+					</tbody>
+				</table>
 			</li>
 		{% endfor %}
 		</ul>
