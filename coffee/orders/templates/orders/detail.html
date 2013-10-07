@@ -117,34 +117,58 @@
 <div class="tab-content">
 	<section id="team" class="tab-pane active in col-12 col-lg-12">
 		<h3>Team Orders</h3>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>Who</th><th>Quantity</th><th>Bag Size in pounds</th><th>Coffee</th><th></th>
+				</tr>
+			</thead>
+			<tbody>
 		{% for item in order.orderitem_set.all %}
-			<ul class="list-unstyled">
 			{% if not item.personal %}
-				<li>
-					<span class="col-10 col-lg-10">{{item}}</span>
-					<form method="POST" action="{% url 'orders:delete_item' item.id %}" class="ib">{% csrf_token %}
-						<input type="submit" class="btn btn-danger btn-xs" value="&times; Delete" />
-					</form>
-				</li>
+				<tr>
+					<td>{{item.person.name}}</td>
+					<td>{{item.quantity}}</td>
+					<td>{{item.size}}</td>
+					<td>{{item.coffee.name}}</td>
+					<td>
+						<form method="POST" action="{% url 'orders:delete_item' item.id %}" class="ib">{% csrf_token %}
+							<button type="submit" class="btn btn-small btn-danger"><strong>&times;</strong> Delete</button>
+						</form>
+					</td>
+				</tr>
 			{% endif %}
-			</ul>
 		{% endfor %}
+			</tbody>
+		</table>
 	</section>
 
 	<section id="personal" class="tab-pane col-12 col-lg-12">
 		<h3>Personal Orders</h3>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>Who</th><th>Quantity</th><th>Bag Size in pounds</th><th>Coffee</th><th></th>
+				</tr>
+			</thead>
+			<tbody>
 		{% for item in order.orderitem_set.all %}
-			<ul class="list-unstyled">
 			{% if item.personal %}
-				<li>
-					<span class="col-10 col-lg-10">{{item}}</span>
-					<form method="POST" action="{% url 'orders:delete_item' item.id %}" class="ib">{% csrf_token %}
-						<input type="submit" class="btn btn-danger btn-xs" value="&times; Delete" />
-					</form>
-				</li>
+				<tr>
+					<td>{{item.person.name}}</td>
+					<td>{{item.quantity}}</td>
+					<td>{{item.size}}</td>
+					<td>{{item.coffee.name}}</td>
+					<td>
+						<form method="POST" action="{% url 'orders:delete_item' item.id %}" class="ib">{% csrf_token %}
+							<button type="submit" class="btn btn-danger btn-small"><strong>&times;</strong> Delete</button>
+						</form>
+					</td>
+				</tr>
 			{% endif %}
-			</ul>
 		{% endfor %}
+			</tbody>
+		</table>
 	</section>
 </div>
 

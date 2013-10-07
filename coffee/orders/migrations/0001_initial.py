@@ -29,9 +29,9 @@ class Migration(SchemaMigration):
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=128)),
             ('description', self.gf('django.db.models.fields.CharField')(max_length=1024)),
-            ('one_pound_price', self.gf('django.db.models.fields.DecimalField')(decimal_places=2, max_digits=5)),
-            ('two_pound_price', self.gf('django.db.models.fields.DecimalField')(decimal_places=2, max_digits=5)),
-            ('five_pound_price', self.gf('django.db.models.fields.DecimalField')(decimal_places=2, max_digits=5)),
+            ('one_pound_price', self.gf('django.db.models.fields.DecimalField')(max_digits=5, decimal_places=2)),
+            ('two_pound_price', self.gf('django.db.models.fields.DecimalField')(max_digits=5, decimal_places=2)),
+            ('five_pound_price', self.gf('django.db.models.fields.DecimalField')(max_digits=5, decimal_places=2)),
             ('image', self.gf('django.db.models.fields.files.ImageField')(max_length=100)),
         ))
         db.send_create_signal('orders', ['Coffee'])
@@ -41,7 +41,7 @@ class Migration(SchemaMigration):
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=128)),
             ('team', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['orders.Team'])),
-            ('date', self.gf('django.db.models.fields.DateField')(blank=True, auto_now_add=True, unique=True)),
+            ('date', self.gf('django.db.models.fields.DateField')(auto_now_add=True, blank=True, unique=True)),
             ('placed', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('closed', self.gf('django.db.models.fields.BooleanField')(default=False)),
         ))
@@ -82,17 +82,21 @@ class Migration(SchemaMigration):
         'orders.coffee': {
             'Meta': {'object_name': 'Coffee'},
             'description': ('django.db.models.fields.CharField', [], {'max_length': '1024'}),
-            'five_pound_price': ('django.db.models.fields.DecimalField', [], {'decimal_places': '2', 'max_digits': '5'}),
+            'five_pound_price': ('django.db.models.fields.DecimalField', [], {'max_digits': '5', 'decimal_places': '2'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
-            'one_pound_price': ('django.db.models.fields.DecimalField', [], {'decimal_places': '2', 'max_digits': '5'}),
-            'two_pound_price': ('django.db.models.fields.DecimalField', [], {'decimal_places': '2', 'max_digits': '5'})
+            'one_pound_price': ('django.db.models.fields.DecimalField', [], {'max_digits': '5', 'decimal_places': '2'}),
+            'two_pound_price': ('django.db.models.fields.DecimalField', [], {'max_digits': '5', 'decimal_places': '2'})
         },
         'orders.order': {
             'Meta': {'object_name': 'Order'},
             'closed': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+<<<<<<< HEAD
             'date': ('django.db.models.fields.DateField', [], {'blank': 'True', 'auto_now_add': 'True', 'unique': 'True'}),
+=======
+            'date': ('django.db.models.fields.DateField', [], {'auto_now_add': 'True', 'blank': 'True', 'unique': 'True'}),
+>>>>>>> 232e04ace674003390e890ffb18b8b9313bc60f6
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
             'placed': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
