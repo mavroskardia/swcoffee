@@ -21,14 +21,17 @@
 			Order Totals
 			<input type="submit" class="btn btn-default pull-right" value="Close Order" />
 		</legend>
-		<table class="clearfix">
+		<table class="pull-left">
 			<tbody>
 				<tr><td>Team:</td><td>{{order.team_total|floatformat:2}}</td></tr>
 				<tr><td>Personal:</td><td>{{order.personal_total|floatformat:2}}</td></tr>
 				<tr><td>Grand:</td><td>{{order.grand_total|floatformat:2}}</td></tr>
 			</tbody>
 		</table>
-		<small class="pull-right">(Individual Team Contribution: {{order.team_individual_contribution|floatformat:2}})</small>
+		<div class="pull-right">
+			<small>Individual Team Contribution: {{order.team_individual_contribution|floatformat:2}}</small><br/>
+			<small>({{order.team.person_set.count}} people on <a href="{% url 'orders:teams' %}">{{order.team.name}}</a>)</small>
+		</div>
 	</fieldset>
 </form>
 
@@ -39,76 +42,71 @@
 
 <div class="tab-content">
 	<section id="coffee" class="tab-pane active in">
-		<h3>One Pound Bags <span class="label label-info">{{onepounders|length}}</span></h3>
-		<table class="table table-hover">	
-			<thead>
-				<tr>
-					<th>Quantity</th><th>Bag Size</th><th>Coffee</th>
-				</tr>
-			</thead>
-			<tbody>
-			{% for item in onepounders %}
-				<tr>
-					<td>{{item.quantity}}</td>
-					<td>{{item.size}}</td>
-					<td>{{item.coffee.name}}</td>
-				</tr>
-			{% endfor %}
-			</tbody>
-		</table>
-		<h3>Two Pound Bags <span class="label label-info">{{twopounders|length}}</span></h3>
-		<table class="table table-hover">	
-			<thead>
-				<tr>
-					<th>Quantity</th><th>Bag Size</th><th>Coffee</th>
-				</tr>
-			</thead>
-			<tbody>
-			{% for item in twopounders %}
-				<tr>
-					<td>{{item.quantity}}</td>
-					<td>{{item.size}}</td>
-					<td>{{item.coffee.name}}</td>
-				</tr>
-			{% endfor %}
-			</tbody>
-		</table>
-		<h3>Five Pound Bags <span class="label label-info">{{fivepounders|length}}</span></h3>
-		<table class="table table-hover">	
-			<thead>
-				<tr>
-					<th>Quantity</th><th>Bag Size</th><th>Coffee</th>
-				</tr>
-			</thead>
-			<tbody>
-			{% for item in fivepounders %}
-				<tr>
-					<td>{{item.quantity}}</td>
-					<td>{{item.size}}</td>
-					<td>{{item.coffee.name}}</td>
-				</tr>
-			{% endfor %}
-			</tbody>
-		</table>
+		<div class="panel-group span12">
+			<div class="panel panel-default">
+				<h3 class="panel-title">
+					<a href="#onelb" class="accordion-toggle" data-toggle="collapse" data-parent="coffee_accordion">
+						One Pound Bags
+					</a>
+				</h3>
+				<div id="onelb" class="panel-collapse collapse">
+					<div class="panel-body">
+						<ul class="list-unstyled wee">
+						{% for item in onepounders %}
+							<li>{{item}}</li>
+						{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<h3 class="panel-title">
+					<a href="#twolbs" class="accordion-toggle" data-toggle="collapse" data-parent="coffee_accordion">
+						Two Pound Bags
+					</a>
+				</h3>
+				<div id="twolbs" class="panel-collapse collapse">
+					<div class="panel-body">
+						<ul class="list-unstyled wee">
+						{% for item in twopounders %}
+							<li>{{item}}</li>
+						{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<h3 class="panel-title">
+					<a href="#fivelbs" class="accordion-toggle" data-toggle="collapse" data-parent="coffee_accordion">
+						Five Pound Bags
+					</a>
+				</h3>
+				<div id="fivelbs" class="panel-collapse collapse">
+					<div class="panel-body">
+						<ul class="list-unstyled wee">
+						{% for item in fivepounders %}
+							<li>{{item}}</li>
+						{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
 	</section>
 
 	<section id="person" class="tab-pane">
-		<ul class="list-unstyled">
+		<ul>
 		{% for items in itemsbyperson %}
 			<li>
-				<h3>{{items.person}}</small></h3>
-				<table class="table table-hover">
-					<thead><tr><th>Quantity</th><th>Bag Size</th><th>Coffee</th></tr></thead>
-					<tbody>
+				<h3>{{items.person}}:</h3>
+				<ul>
 				{% for oi in items.items %}
-					<tr>
-						<td>{{oi.quantity}}</td>
-						<td>{{oi.size}}</td>
-						<td>{{oi.coffee.name}}</td>
-					</tr>
- 				{% endfor %}
-					</tbody>
-				</table>
+					<li>
+						{{oi}}
+
+					</li>
+				{% endfor %}
+				</ul>
 			</li>
 		{% endfor %}
 		</ul>

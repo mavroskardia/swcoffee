@@ -34,14 +34,17 @@
 			Order Totals
 			<input type="submit" class="btn btn-default pull-right" value="Place Order" />
 		</legend>
-		<table class="clearfix">
+		<table class="pull-left">
 			<tbody>
 				<tr><td>Team:</td><td>{{order.team_total|floatformat:2}}</td></tr>
 				<tr><td>Personal:</td><td>{{order.personal_total|floatformat:2}}</td></tr>
 				<tr><td>Grand:</td><td>{{order.grand_total|floatformat:2}}</td></tr>
 			</tbody>
 		</table>
-		<small class="pull-right">(Individual Team Contribution: {{order.team_individual_contribution|floatformat:2}})</small>
+		<div class="pull-right">
+			<small>Individual Team Contribution: {{order.team_individual_contribution|floatformat:2}}</small><br/>
+			<small>({{order.team.person_set.count}} people on <a href="{% url 'orders:teams' %}">{{order.team.name}}</a>)</small>
+		</div>
 	</fieldset>
 </form>
 
@@ -117,58 +120,34 @@
 <div class="tab-content">
 	<section id="team" class="tab-pane active in col-12 col-lg-12">
 		<h3>Team Orders</h3>
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th>Who</th><th>Quantity</th><th>Bag Size in pounds</th><th>Coffee</th><th></th>
-				</tr>
-			</thead>
-			<tbody>
 		{% for item in order.orderitem_set.all %}
+			<ul class="list-unstyled">
 			{% if not item.personal %}
-				<tr>
-					<td>{{item.person.name}}</td>
-					<td>{{item.quantity}}</td>
-					<td>{{item.size}}</td>
-					<td>{{item.coffee.name}}</td>
-					<td>
-						<form method="POST" action="{% url 'orders:delete_item' item.id %}" class="ib">{% csrf_token %}
-							<button type="submit" class="btn btn-small btn-danger"><strong>&times;</strong> Delete</button>
-						</form>
-					</td>
-				</tr>
+				<li>
+					<span class="col-10 col-lg-10">{{item}}</span>
+					<form method="POST" action="{% url 'orders:delete_item' item.id %}" class="ib">{% csrf_token %}
+						<input type="submit" class="btn btn-danger btn-xs" value="&times; Delete" />
+					</form>
+				</li>
 			{% endif %}
+			</ul>
 		{% endfor %}
-			</tbody>
-		</table>
 	</section>
 
 	<section id="personal" class="tab-pane col-12 col-lg-12">
 		<h3>Personal Orders</h3>
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th>Who</th><th>Quantity</th><th>Bag Size in pounds</th><th>Coffee</th><th></th>
-				</tr>
-			</thead>
-			<tbody>
 		{% for item in order.orderitem_set.all %}
+			<ul class="list-unstyled">
 			{% if item.personal %}
-				<tr>
-					<td>{{item.person.name}}</td>
-					<td>{{item.quantity}}</td>
-					<td>{{item.size}}</td>
-					<td>{{item.coffee.name}}</td>
-					<td>
-						<form method="POST" action="{% url 'orders:delete_item' item.id %}" class="ib">{% csrf_token %}
-							<button type="submit" class="btn btn-danger btn-small"><strong>&times;</strong> Delete</button>
-						</form>
-					</td>
-				</tr>
+				<li>
+					<span class="col-10 col-lg-10">{{item}}</span>
+					<form method="POST" action="{% url 'orders:delete_item' item.id %}" class="ib">{% csrf_token %}
+						<input type="submit" class="btn btn-danger btn-xs" value="&times; Delete" />
+					</form>
+				</li>
 			{% endif %}
+			</ul>
 		{% endfor %}
-			</tbody>
-		</table>
 	</section>
 </div>
 
