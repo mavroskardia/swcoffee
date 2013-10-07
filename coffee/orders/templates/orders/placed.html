@@ -30,7 +30,10 @@
 		</table>
 		<div class="pull-right">
 			<small>Individual Team Contribution: {{order.team_individual_contribution|floatformat:2}}</small><br/>
-			<small>({{order.team.person_set.count}} people on <a href="{% url 'orders:teams' %}">{{order.team.name}}</a>)</small>
+			<small>
+				({{order.team.person_set.count}} {{order.team.person_set.count|pluralize:"person,people"}} on
+				<a href="{% url 'orders:teams' %}">{{order.team.name}}</a>)
+			</small>
 		</div>
 	</fieldset>
 </form>
