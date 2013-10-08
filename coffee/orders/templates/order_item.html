@@ -1,0 +1,11 @@
+<tr>
+	<td>{{item.person.name}}</td>
+	<td>{{item.coffee.name}}</td>
+	<td>{{item.quantity}}</td>
+	<td>{{item.size}}</td>
+	<td>
+		<form method="POST" action="{% url 'orders:delete_item' item.id %}" class="ib">{% csrf_token %}
+			<button type="submit" class="btn btn-danger btn-small"><b>&times;</b> Delete</button>
+		</form>
+	</td>
+</tr>
