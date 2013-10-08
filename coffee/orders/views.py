@@ -78,8 +78,6 @@ def detail(req, order_id):
 				messages.warning(req, '%s is not on team %s, forcing order to personal' % (oi.person.name, oi.order.team))
 
 			oi.save()
-
-			return HttpResponseRedirect(reverse('orders:detail', args=(order_id)))
 	else:
 		orderform = OrderItemForm()
 

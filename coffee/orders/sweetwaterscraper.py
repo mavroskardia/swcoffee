@@ -76,7 +76,7 @@ def make_coffee(row):
 	return c
 
 def get_image_data(url):
-	c = http.client.HTTPConnection('sweetwatercoffee.e-beans.net')
+	c = http.HTTPConnection('sweetwatercoffee.e-beans.net')
 	c.request('GET', url)
 	resp = c.getresponse()
 	assert resp.status == 200
