@@ -194,7 +194,12 @@ def teams(req):
 		tf = TeamForm(req.POST)
 		if tf.is_valid():
 			team  = tf.save()
-			return HttpResponseRedirect(reverse('orders:teams'))
+		return render(req,
+				'orders/teams.html', {
+					'title': 'Teams',
+					'teams': Team.objects.all(),
+					'tf': tf
+				})
 	else:
 		tf = TeamForm()
 	return render(req,
@@ -227,7 +232,6 @@ def people(req):
 		pf = PersonForm(req.POST)
 		if pf.is_valid():
 			person = pf.save()
-			return HttpResponseRedirect(reverse('orders:people'))
 	else:
 		pf = PersonForm()
 
@@ -235,7 +239,7 @@ def people(req):
 		'orders/people.html', {
 			'title': 'People',
 			'people': Person.objects.all(),
-			'pf': PersonForm()
+			'pf': pf 
 		}
 	)
 
