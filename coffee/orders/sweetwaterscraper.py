@@ -1,7 +1,16 @@
-import http.client
+try:
+	import http.client as http
+except:
+	import httplib as http
+
 import base64
 from orders.models import Coffee
-from html.parser import HTMLParser
+
+try:
+	from html.parser import HTMLParser
+except:
+	from HTMLParser import HTMLParser
+
 from bs4 import BeautifulSoup
 
 def scrape(update_function=None):
@@ -16,7 +25,7 @@ def scrape(update_function=None):
 	]
 
 	for p in pages:
-		c = http.client.HTTPConnection('sweetwatercoffee.e-beans.net')
+		c = http.HTTPConnection('sweetwatercoffee.e-beans.net')
 		c.request('GET', p)
 		resp = c.getresponse()
 		assert resp.status == 200

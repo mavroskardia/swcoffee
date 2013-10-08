@@ -1,6 +1,10 @@
 import sys
 import sqlite3
-import http.client
+try:
+	import http.client as http
+except:
+	import httplib as http
+
 import base64
 
 from html.parser import HTMLParser
@@ -78,7 +82,7 @@ the current in-memory coffee list after an update but before a commit
 
 		for p in pages:
 			print('processing page...', end='')
-			c = http.client.HTTPConnection('sweetwatercoffee.e-beans.net')
+			c = http.HTTPConnection('sweetwatercoffee.e-beans.net')
 			c.request('GET', p)
 			resp = c.getresponse()
 			assert resp.status == 200
