@@ -22,13 +22,12 @@
 </form>
 
 {% if teams %}
-<div class="col-5 col-lg-5">
+<div class="col-5 col-lg-7">
 	<h3>Existing Teams:</h3>
 	<ul class="nav nav-pills nav-stacked">
 	{% for team in teams %}
 		<li>
-			<span>{{ team.name }}</span>
-			<span>{{ team.description }}</span>
+			<h4>{{ team.name }} <small>{{ team.description }}</small></span>
 		</li>
 	{% endfor %}
 	</ul>

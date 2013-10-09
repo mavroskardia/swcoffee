@@ -4,8 +4,8 @@ from os.path import abspath, dirname, join
 
 this_dir = dirname(abspath(__file__))
 
-DEBUG = False
-#DEBUG = True
+#DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
