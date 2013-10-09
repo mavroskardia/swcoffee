@@ -13,7 +13,10 @@ class OrderAdmin(admin.ModelAdmin):
 	search_fields = ['name']
 	date_hierarchy = 'date'
 
+class CoffeeAdmin(admin.ModelAdmin):
+	list_display = ('name', 'one_pound_price', 'two_pound_price', 'five_pound_price')
+
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Team)
 admin.site.register(Person)
-admin.site.register(Coffee)
+admin.site.register(Coffee, CoffeeAdmin)
