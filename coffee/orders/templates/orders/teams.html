@@ -6,7 +6,7 @@
 
 <h2>{{title}}</h2>
 
-<form class="col-5 col-lg-5" method="post" action="{% url 'orders:teams' %}">
+<form class="col-12 col-lg-5" method="post" action="{% url 'orders:teams' %}">
 	{% csrf_token %}
 	<fieldset>
 		{{ tf.non_field_errors }}
@@ -22,7 +22,7 @@
 </form>
 
 {% if teams %}
-<div class="col-5 col-lg-5">
+<div class="col-12 col-lg-5">
 	<h3>Existing Teams:</h3>
 	<ul class="nav nav-pills nav-stacked">
 	{% for team in teams %}
