@@ -78,16 +78,16 @@ def detail(req, order_id):
 				messages.warning(req, '%s is not on team %s, forcing order to personal' % (oi.person.name, oi.order.team))
 
 			oi.save()
-
-			return HttpResponseRedirect(reverse('orders:detail', args=(order_id)))
 	else:
 		orderform = OrderItemForm()
 
 	return render(req,
 		'orders/detail.html', {
 			'title': 'Order %s' % order.name,
-			'order' : order,
-			'orderform' : orderform
+			'order': order,
+			'orderform': orderform,
+			'teamitems': order.orderitem_set.filter(personal=False),
+			'personalitems': order.orderitem_set.filter(personal=True) 
 		}
 	)
 
@@ -98,56 +98,12 @@ def placed(req, order_id):
 	if order.closed:
 		return HttpResponseRedirect(reverse('orders:closed', args=(order_id,)))
 
-	itemsbyperson, itemsbycoffee = build_sorted_objects(order)
-
-	onepounders = order.orderitem_set.filter(size=1)
-	twopounders = order.orderitem_set.filter(size=2)
-	fivepounders = order.orderitem_set.filter(size=5)
-
 	return render(req,
 		'orders/placed.html', {
 			'title': 'Placed Order %s' % order.name,
-			'order': order,
-			'itemsbyperson': itemsbyperson.values(),
-			'itemsbycoffee': itemsbycoffee.values(),
-			'onepounders': onepounders,
-			'twopounders': twopounders,
-			'fivepounders': fivepounders
+			'order': order
 		}
 	)
-
-def build_sorted_objects(order):
-
-	class ItemsByPerson:
-		def __init__(self, person, order):
-			self.person = person			
-			self.items = []
-			self.order = order
-
-	class ItemsByCoffee:
-		def __init__(self, coffee):
-			self.coffee = coffee
-			self.items = []
-
-		def value(self):
-			return sum([i.value() for i in self.items])
-
-		def pounds(self):
-			return sum([i.size*i.quantity for i in self.items])
-
-	itemsbyperson = {}
-	itemsbycoffee = {}
-
-	for oi in order.orderitem_set.all():
-		if oi.person.name not in itemsbyperson:
-			itemsbyperson[oi.person.name] = ItemsByPerson(oi.person, order)
-		itemsbyperson[oi.person.name].items.append(oi)
-
-		if oi.coffee.name not in itemsbycoffee:
-			itemsbycoffee[oi.coffee.name] = ItemsByCoffee(oi.coffee)
-		itemsbycoffee[oi.coffee.name].items.append(oi)
-
-	return itemsbyperson, itemsbycoffee
 
 def place(req, order_id):
 	if req.method == 'POST':
@@ -157,7 +113,7 @@ def place(req, order_id):
 
 		return HttpResponseRedirect(reverse('orders:placed', args=(order_id,)))
 
-	messages.error(req, 'Cannot place an order this way, sucka')
+	messages.error(req, 'Cannot place an order this way')
 	return HttpResponseRedirect(reverse('orders:detail', args=(order_id,)))
 
 def close(req, order_id):
@@ -168,7 +124,7 @@ def close(req, order_id):
 
 		return HttpResponseRedirect(reverse('orders:closed', args=(order_id,)))
 
-	messages.error(req, 'Cannot close an order this way, sucka')
+	messages.error(req, 'Cannot close an order this way')
 	return HttpResponseRedirect(reverse('orders:placed', args=(order_id,)))
 
 def closed(req, order_id):
@@ -177,16 +133,17 @@ def closed(req, order_id):
 	if not order.closed:
 		return HttpResponseRedirect(reverse('orders:detail', args=(order_id,)))
 
-	itemsbyperson, itemsbycoffee = build_sorted_objects(order)
-
 	return render(req,
 		'orders/closed.html', {
 			'title': 'Closed Order %s' % order.name,
-			'order': order,
-			'itemsbyperson': itemsbyperson.values(),
-			'itemsbycoffee': itemsbycoffee.values()
+			'order': order
 		}
 	)
+
+def recalculate(req, order_id):
+	order = get_object_or_404(Order, pk=order_id)
+
+	return HttpResponseRedirect(reverse('orders:closed', args=(order_id,)))
 
 def teams(req):
 
@@ -245,6 +202,10 @@ def people(req):
 
 def generate_coffee(req):
 	def create_coffee(coffee):
+		# skip duplicates
+		if Coffee.objects.filter(name=coffee.name).count() > 0:
+			return
+		
 		c = Coffee()
 		c.name = coffee.name
 		c.description = coffee.description

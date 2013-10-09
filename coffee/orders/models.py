@@ -62,7 +62,7 @@ class Coffee(models.Model):
 class Order(models.Model):
 	name = models.CharField(max_length=128,help_text="Name of this order")
 	team = models.ForeignKey(Team,help_text="Team divides the non-personal total")
-	date = models.DateField(auto_now_add=True, unique=True)
+	date = models.DateField(auto_now_add=True)
 	placed = models.BooleanField(default=False)
 	closed = models.BooleanField(default=False)
 

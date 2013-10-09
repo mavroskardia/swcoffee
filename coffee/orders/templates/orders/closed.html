@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load order_extras %}
 
 {% block title %}{{title}}{% endblock %}
 
@@ -6,56 +7,32 @@
 
 <h2>{{order.date}} <small>{{order.team}}</small></h2>
 
-<form method="post" action="{% url 'orders:close' order.id %}" class="well">
-	{% csrf_token %}
-	<fieldset>
-		<legend>Order Totals</legend>
-		<table class="pull-left">
-			<tbody>
-				<tr><td>Team:</td><td>{{order.team_total|floatformat:2}}</td></tr>
-				<tr><td>Personal:</td><td>{{order.personal_total|floatformat:2}}</td></tr>
-				<tr><td>Grand:</td><td>{{order.grand_total|floatformat:2}}</td></tr>
-			</tbody>
-		</table>
-		<div class="pull-right">
-			<small>Individual Team Contribution: {{order.team_individual_contribution|floatformat:2}}</small><br/>
-			<small>
-				({{order.team.person_set.count}} {{order.team.person_set.count|pluralize:"person,people"}} on
-				<a href="{% url 'orders:teams' %}">{{order.team.name}}</a>)
-			</small>
-		</div>
-	</fieldset>
+<div class="well">
+{% show_order_totals order None %}
+</div>
+
+<form method="post" action="{% url 'orders:recalculate' order.id %}" class="col-12 col-lg-12">{%csrf_token %}
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Who</th><th>Items</th><th>Total Owed</th><th>Paid</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% regroup order.orderitem_set.all by person as people %}
+			{% for person in people %}
+			<tr>
+				<td>{{person.grouper.name}}</td>
+				<td>{% show_item_collection person.list false 'coffee' 'quantity' 'size' 'personal' 'value' %}</td>				
+				<td>{% person_total person.grouper order %}</td>
+				<td>
+					<input class="form-control" type="number" min="0.0" step="0.5" value="{% person_paid person.list %}" />
+				</td>
+			</tr>
+			{% endfor %}			
+		</tbody>
+	</table>
+	<button type="submit" class="btn btn-large btn-primary">Recalculate</button>
 </form>
-
-<h2>By Person</h2>
-<ul>
-{% for items in itemsbyperson %}
-	<li>
-		<h3>{{items.person}}:</h3>
-		<ul>
-		{% for oi in items.items %}
-			<li>{{oi}}</li>
-		{% endfor %}
-		</ul>
-	</li>
-{% endfor %}
-</ul>
-
-<h2>By Coffee</h2>
-<ul>
-{% for items in itemsbycoffee %}
-	<li>
-		<h3>{{items.coffee}}:</h3>
-		<span class="pounds">{{items.pounds}}</span>
-		<span class="value">{{items.value}}</span>
-		<ul>
-		{% for oi in items.items %}
-			<li>{{oi}}</li>
-		{% endfor %}
-		</ul>
-	</li>
-{% endfor %}
-</ul>
-
 
 {% endblock %}

@@ -1,0 +1,22 @@
+{% load order_extras %}
+<table class="table table-hover">
+	<thead>
+		<tr>
+			{% for c in columns %}
+			<th>
+				{% if c == 'who' %}Who
+				{% elif c == 'coffee' %}Coffee
+				{% elif c == 'quantity' %}Quantity
+				{% elif c == 'size' %}Bag Size
+				{% elif c == 'personal' %}Personal
+				{% endif %}
+			</th>
+			{% endfor %}
+		</tr>
+	</thead>
+	<tbody>
+	{% for item in items %}
+		{% show_order_item item can_delete columns %}
+	{% endfor %}
+	</tbody>
+</table>
