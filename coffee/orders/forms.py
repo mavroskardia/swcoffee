@@ -34,8 +34,8 @@ class PersonForm(forms.ModelForm):
 		model = Person
 
 class CoffeeForm(forms.ModelForm):
-	name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'A unique name for this team'}))
-	description = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Description of the team'}))
+	name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'A unique name for this coffee'}))
+	description = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Description of the coffee'}))
 	one_pound_price = forms.DecimalField(min_value=0.0,decimal_places=2,widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Price for a single pound bag'}))
 	two_pound_price = forms.DecimalField(min_value=0.0,decimal_places=2,widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Price for a two pound bag'}))
 	five_pound_price = forms.DecimalField(min_value=0.0,decimal_places=2,widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Price for a five pound bag'}))
