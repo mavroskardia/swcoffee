@@ -27,8 +27,7 @@
 	<ul class="nav nav-pills nav-stacked">
 	{% for team in teams %}
 		<li>
-			<span>{{ team.name }}</span>
-			<span>{{ team.description }}</span>
+			<h4>{{ team.name }} <small>{{ team.description }}</small></span>
 		</li>
 	{% endfor %}
 	</ul>
