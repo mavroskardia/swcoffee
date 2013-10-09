@@ -204,6 +204,7 @@ def generate_coffee(req):
 	def create_coffee(coffee):
 		# skip duplicates
 		if Coffee.objects.filter(name=coffee.name).count() > 0:
+			messages.warning(req, 'Skipped "%s" since a coffee with that name already exists' % coffee.name)
 			return
 		
 		c = Coffee()
