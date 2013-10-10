@@ -1,10 +1,10 @@
-Re-add the UI changes
+x Re-add the UI changes
 Indicate which fields are required
-work on colors of the toggle buttons
+x work on colors of the toggle buttons
 disallow whitespace-only order/team/person/coffee names
 change order name
-allow multiple orders per day
+x allow multiple orders per day
 don't let users place order with no coffees
 maintain form values for adding order items
 maintain selected tab
-
+placed order page should rollup like bag sizes with like coffees

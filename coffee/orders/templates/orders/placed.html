@@ -3,6 +3,16 @@
 
 {% block title %}{{title}}{% endblock %}
 
+{% block extrascript %}
+
+	<script>
+		$(document).ready(function () {
+			$('#placement table').tablesorter();
+		});
+	</script>
+
+{% endblock %}
+
 {% block content %}
 
 <h2>{{order.date}} <small>{{order.team}}</small></h2>
@@ -19,7 +29,7 @@
 
 <div class="tab-content">
 	<section id="placement" class="tab-pane active in">
-		{% show_item_collection order.orderitem_set.all false 'coffee' 'quantity' 'size' %}
+		{% show_item_collection order.orderitem_set.all false 'coffee' 'quantity' 'size' %}			
 	</section>
 
 	<section id="person" class="tab-pane">
