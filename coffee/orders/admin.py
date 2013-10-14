@@ -1,5 +1,5 @@
 from django.contrib import admin
-from orders.models import Order,OrderItem,Team,Person,Coffee
+from orders.models import Order,OrderItem,Team,Person,Coffee,Payment
 
 class OrderItemInline(admin.TabularInline):
 	model = OrderItem
@@ -20,3 +20,4 @@ admin.site.register(Order, OrderAdmin)
 admin.site.register(Team)
 admin.site.register(Person)
 admin.site.register(Coffee, CoffeeAdmin)
+admin.site.register(Payment)

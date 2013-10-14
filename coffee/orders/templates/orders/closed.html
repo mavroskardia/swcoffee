@@ -20,7 +20,7 @@
 	<table class="table">
 		<thead>
 			<tr>
-				<th>Who</th><th>Items</th><th>Total Owed</th><th>Paid</th>
+				<th>Who</th><th>Items</th><th>Total Owed</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -30,14 +30,26 @@
 				<td>{{person.grouper.name}}</td>
 				<td>{% show_item_collection person.list false 'coffee' 'quantity' 'size' 'personal' 'value' %}</td>				
 				<td>{% person_total person.grouper order %}</td>
-				<td>
-					<input class="form-control" type="number" min="0.0" step="0.5" value="{% person_paid person.list %}" />
-				</td>
 			</tr>
 			{% endfor %}			
 		</tbody>
 	</table>
-	<button type="submit" class="btn btn-large btn-primary">Recalculate</button>
+
+	<h3>Payments</h3>
+	<table class="payments col-4 col-lg-4">
+		<thead>
+			<tr><th>Who</th><th>Owed</th><th>Paid</th></tr>
+		</thead>
+		<tbody>
+	{% for payment in order.payment_set.all %}
+			<tr>
+				<td>{{payment.person}}</td>
+				<td class="text-right">{{payment.owed|floatformat:2}}</td>
+				<td class="text-right{% if payment.paid >= payment.owed %} positive{% else %} negative{% endif %}">{{payment.paid|floatformat:2}}</td>
+			</tr>
+	{% endfor %}
+		</tbody>
+	</table>
 </form>
 
 {% endblock %}

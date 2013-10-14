@@ -83,7 +83,7 @@ class Order(models.Model):
 		return self.grand_total() - self.total_paid()
 
 	def total_paid(self):
-		return self.orderitem_set.aggregate(Sum('paid'))['paid__sum']
+		return self.payment_set.aggregate(Sum('paid'))['paid__sum']
 
 	def __unicode__(self):
 		return self.name
@@ -98,7 +98,7 @@ class OrderItem(models.Model):
 	quantity = models.IntegerField()
 	personal = models.BooleanField(default=False)
 	paid = models.DecimalField(max_digits=5,decimal_places=2,default=0.0)
-
+	
 	def value(self):
 		return self.coffee.value(self.size, self.quantity)
 
@@ -112,5 +112,14 @@ class OrderItem(models.Model):
 	def __str__(self):
 		return self.__unicode__()
 
+class Payment(models.Model):
+	order = models.ForeignKey(Order)
+	person = models.ForeignKey(Person)
+	owed = models.DecimalField(max_digits=5,decimal_places=2,default=0.0)
+	paid = models.DecimalField(max_digits=5,decimal_places=2,default=0.0)
 
+	def __unicode__(self):
+		return '%s: (%s) %s' % (self.person.name, self.owed, self.paid)
 
+	def __str__(self):
+		return self.__unicode__()

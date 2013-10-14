@@ -5,9 +5,7 @@ form input[type=submit] { display: block; }
 
 .errorlist { list-style: none; color: #900; font-style: oblique; padding: 0; margin: 0; }
 
-
 .btn-info.active { background-color: #3C9EBB; }
-
 
 .well table tr td:last-child { text-align: right; }
 .well table tr:last-child { border-top: solid 1px #ccc; }
@@ -20,3 +18,6 @@ form input[type=submit] { display: block; }
 .form-group { margin-right: 1em; }
 
 .tab-content table { margin-top: 1em; }
+
+table.payments .negative { font-weight: bold; color: #900; }
+table.payments .positive { color: #090; }

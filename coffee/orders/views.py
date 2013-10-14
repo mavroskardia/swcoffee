@@ -133,11 +133,15 @@ def closed(req, order_id):
 	if not order.closed:
 		return HttpResponseRedirect(reverse('orders:detail', args=(order_id,)))
 
+	people_who_ordered = set([oi.person.name for oi in order.orderitem_set.all()])
+	leftover_people = order.team.person_set.exclude(name__in=people_who_ordered)
+
 	return render(req,
 		'orders/closed.html', {
 			'title': 'Closed Order %s' % order.name,
 			'order': order,
-			'sorteditems': order.orderitem_set.all().order_by('person')
+			'sorteditems': order.orderitem_set.all().order_by('person'),
+			'leftoverpeople': leftover_people
 		}
 	)
 
