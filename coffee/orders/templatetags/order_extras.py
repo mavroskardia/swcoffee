@@ -18,8 +18,10 @@ def show_order_totals(order, action_text):
 @register.inclusion_tag('person_total_for_order.html')
 def person_total(person, order):
 	total = 0.0
-	for item in order.orderitem_set.filter(person=person.id):
+	for item in order.orderitem_set.filter(person=person.id,personal=True):
 		total += float(item.value() or 0.0)
+	if person.team == order.team:
+		total += float(order.team_individual_contribution())
 	return {'total':total}
 
 @register.inclusion_tag('person_paid.html')
