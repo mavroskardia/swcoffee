@@ -3,6 +3,7 @@ from django.core.files.images import ImageFile
 from io import BytesIO
 from base64 import b64encode,b64decode
 from django.db import models
+from django.db.models import Sum
 
 class Team(models.Model):
 	name = models.CharField(max_length=128)
@@ -77,6 +78,12 @@ class Order(models.Model):
 
 	def team_individual_contribution(self):
 		return self.team_total() / (self.team.person_set.count() or 1)
+
+	def total_remaining(self):
+		return self.grand_total() - self.total_paid()
+
+	def total_paid(self):
+		return self.orderitem_set.aggregate(Sum('paid'))['paid__sum']
 
 	def __unicode__(self):
 		return self.name

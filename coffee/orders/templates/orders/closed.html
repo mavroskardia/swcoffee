@@ -11,6 +11,11 @@
 {% show_order_totals order None %}
 </div>
 
+<h2>
+	<small>Total Paid:</small> ${{order.total_paid|floatformat:2}}
+	<small>Remaining:</small> ${{order.total_remaining|floatformat:2}}
+</h2>
+
 <form method="post" action="{% url 'orders:recalculate' order.id %}" class="col-12 col-lg-12">{%csrf_token %}
 	<table class="table">
 		<thead>
@@ -19,7 +24,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{% regroup order.orderitem_set.all by person as people %}
+			{% regroup sorteditems by person as people %}
 			{% for person in people %}
 			<tr>
 				<td>{{person.grouper.name}}</td>

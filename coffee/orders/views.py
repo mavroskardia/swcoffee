@@ -136,7 +136,8 @@ def closed(req, order_id):
 	return render(req,
 		'orders/closed.html', {
 			'title': 'Closed Order %s' % order.name,
-			'order': order
+			'order': order,
+			'sorteditems': order.orderitem_set.all().order_by('person')
 		}
 	)
 
