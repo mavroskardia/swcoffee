@@ -95,6 +95,9 @@ class OrderItem(models.Model):
 	def value(self):
 		return self.coffee.value(self.size, self.quantity)
 
+	def as_csv(self):
+		return ','.join([str(i) for i in [self.person.name,self.coffee.name,self.quantity,self.size,self.personal,self.value()]])
+
 	def __unicode__(self):
 		'''[person] placed [a|qty] [size] pound bag(s) of [coffee] for [team]'''
 		#return u'{a.person} placed {a.quantity}x {a.size} pound bag(s) of {a.coffee} for {team_or_personal}'.format(a=self, team_or_personal='him/herself' if self.personal else self.person.team)
