@@ -28,10 +28,10 @@
 			{% for person in people %}
 			<tr>
 				<td>{{person.grouper.name}}</td>
-				<td>{% show_item_collection person.list false 'coffee' 'quantity' 'size' 'personal' 'value' %}</td>				
+				<td>{% show_item_collection person.list false 'coffee' 'quantity' 'size' 'personal' 'value' %}</td>
 				<td>{% person_total person.grouper order %}</td>
 			</tr>
-			{% endfor %}			
+			{% endfor %}
 		</tbody>
 	</table>
 
