@@ -39,7 +39,7 @@
 		<li class="clearfix">
 			<img class="pull-left" src="{{ c.image_data_url }}" alt="Image of {{c.name}}" width="100" />
 			<strong>{{ c.name }}</strong>
-			<span>{{ c.description }}</span>
+			<span>{{ c.description }} ({{c.active|yesno:"Active,Inactive"}})</span>
 
 			<div class="pull-right">
 				<small>{{ c.one_pound_price }}</small>

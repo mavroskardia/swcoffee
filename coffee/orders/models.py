@@ -30,6 +30,7 @@ class Coffee(models.Model):
 	two_pound_price = models.DecimalField(max_digits=5,decimal_places=2)
 	five_pound_price = models.DecimalField(max_digits=5,decimal_places=2)
 	image = models.ImageField(upload_to='images')
+	active = models.BooleanField(default=True)
 
 	class BadSizeException(Exception):
 		pass
@@ -98,7 +99,7 @@ class OrderItem(models.Model):
 	quantity = models.IntegerField()
 	personal = models.BooleanField(default=False)
 	paid = models.DecimalField(max_digits=5,decimal_places=2,default=0.0)
-	
+
 	def value(self):
 		return self.coffee.value(self.size, self.quantity)
 

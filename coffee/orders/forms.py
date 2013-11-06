@@ -10,7 +10,7 @@ class OrderForm(forms.ModelForm):
 
 class OrderItemForm(forms.ModelForm):
 	person = forms.ModelChoiceField(widget=forms.Select(attrs={'class':'form-control'}), queryset=Person.objects.all())
-	coffee = forms.ModelChoiceField(widget=forms.Select(attrs={'class':'form-control'}), queryset=Coffee.objects.all())
+	coffee = forms.ModelChoiceField(widget=forms.Select(attrs={'class':'form-control'}), queryset=Coffee.objects.filter(active=True))
 	size = forms.ChoiceField(widget=forms.Select(attrs={'class':'form-control'}), choices=((1,1),(2,2),(5,5)))
 	quantity = forms.ChoiceField(widget=forms.Select(attrs={'class':'form-control'}), choices=((1,1),(2,2),(3,3),(4,4),(5,5),(6,6)))
 	personal = forms.BooleanField(required=False)
@@ -40,6 +40,7 @@ class CoffeeForm(forms.ModelForm):
 	two_pound_price = forms.DecimalField(min_value=0.0,decimal_places=2,widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Price for a two pound bag'}))
 	five_pound_price = forms.DecimalField(min_value=0.0,decimal_places=2,widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Price for a five pound bag'}))
 	image = forms.ImageField()
+	active = forms.BooleanField()
 
 	class Meta:
 		model = Coffee

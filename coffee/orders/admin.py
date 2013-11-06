@@ -14,7 +14,7 @@ class OrderAdmin(admin.ModelAdmin):
 	date_hierarchy = 'date'
 
 class CoffeeAdmin(admin.ModelAdmin):
-	list_display = ('name', 'one_pound_price', 'two_pound_price', 'five_pound_price')
+	list_display = ('name', 'one_pound_price', 'two_pound_price', 'five_pound_price', 'active')
 
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Team)
