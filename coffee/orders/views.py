@@ -87,7 +87,7 @@ def detail(req, order_id):
 			'order': order,
 			'orderform': orderform,
 			'teamitems': order.orderitem_set.filter(personal=False),
-			'personalitems': order.orderitem_set.filter(personal=True) 
+			'personalitems': order.orderitem_set.filter(personal=True)
 		}
 	)
 
@@ -174,7 +174,7 @@ def teams(req):
 
 def coffee(req):
 	if req.method == 'POST':
-		cf = CoffeeForm(req.POST)
+		cf = CoffeeForm(req.POST, req.FILES)
 		if cf.is_valid():
 			coffee = cf.save()
 			return HttpResponseRedirect(reverse('orders:coffee'))
@@ -201,7 +201,7 @@ def people(req):
 		'orders/people.html', {
 			'title': 'People',
 			'people': Person.objects.all(),
-			'pf': pf 
+			'pf': pf
 		}
 	)
 
@@ -211,7 +211,7 @@ def generate_coffee(req):
 		if Coffee.objects.filter(name=coffee.name).count() > 0:
 			messages.warning(req, 'Skipped "%s" since a coffee with that name already exists' % coffee.name)
 			return
-		
+
 		c = Coffee()
 		c.name = coffee.name
 		c.description = coffee.description

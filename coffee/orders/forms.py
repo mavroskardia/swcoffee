@@ -40,7 +40,7 @@ class CoffeeForm(forms.ModelForm):
 	two_pound_price = forms.DecimalField(min_value=0.0,decimal_places=2,widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Price for a two pound bag'}))
 	five_pound_price = forms.DecimalField(min_value=0.0,decimal_places=2,widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Price for a five pound bag'}))
 	image = forms.ImageField()
-	active = forms.BooleanField()
+	active = forms.BooleanField(required=False)
 
 	class Meta:
 		model = Coffee
