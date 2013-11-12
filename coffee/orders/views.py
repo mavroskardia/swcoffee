@@ -98,10 +98,16 @@ def placed(req, order_id):
 	if order.closed:
 		return HttpResponseRedirect(reverse('orders:closed', args=(order_id,)))
 
+	# i'm sure there is a database way to do this better with aggregation, but I don't know it and it's not that important here
+	totallbs = sum([o.totallbs() for o in order.orderitem_set.all()])
+
 	return render(req,
 		'orders/placed.html', {
 			'title': 'Placed Order %s' % order.name,
-			'order': order
+			'order': order,
+			'sorteditems_coffee': order.orderitem_set.all().order_by('coffee'),
+			'sorteditems_person': order.orderitem_set.all().order_by('person'),
+			'totallbs': totallbs
 		}
 	)
 

@@ -21,3 +21,6 @@ form input[type=submit] { display: block; }
 
 table.payments .negative { font-weight: bold; color: #900; }
 table.payments .positive { color: #090; }
+
+.ml1m { margin-left: 1em; }
+.mt1m { margin-top: 1em; }

@@ -100,6 +100,9 @@ class OrderItem(models.Model):
 	personal = models.BooleanField(default=False)
 	paid = models.DecimalField(max_digits=5,decimal_places=2,default=0.0)
 
+	def totallbs(self):
+		return self.size * self.quantity
+
 	def value(self):
 		return self.coffee.value(self.size, self.quantity)
 

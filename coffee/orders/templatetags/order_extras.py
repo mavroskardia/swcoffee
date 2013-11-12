@@ -27,3 +27,24 @@ def person_total(person, order):
 @register.inclusion_tag('person_paid.html')
 def person_paid(items):
 	return {'paid':sum([i.paid for i in items])}
+
+@register.inclusion_tag('coffee_values.html')
+def coffee_values(orderitems):
+	one = [o for o in orderitems if o.size is 1]
+	two = [o for o in orderitems if o.size is 2]
+	five = [o for o in orderitems if o.size is 5]
+
+	oneq = sum([q.quantity for q in one])
+	twoq = sum([q.quantity for q in two])
+	fiveq = sum([q.quantity for q in five])
+
+	return {
+		'one': one,
+		'oneq': oneq,
+		'two': two,
+		'twoq': twoq,
+		'five': five,
+		'fiveq': fiveq,
+		'totallbs': oneq + (2*twoq) + (5*fiveq)
+	}
+
