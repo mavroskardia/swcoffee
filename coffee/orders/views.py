@@ -231,3 +231,8 @@ def generate_coffee(req):
 	orders.sweetwaterscraper.scrape(create_coffee)
 
 	return HttpResponseRedirect(reverse('orders:coffee'))
+
+def coffee_overlay(req, coffee_id):
+	coffee = get_object_or_404(Coffee, pk=coffee_id)
+
+	return render(req, 'orders/coffee_overlay.html', { 'coffee': coffee })

@@ -2,7 +2,7 @@
 	{% for c in columns %}
 	<td>
 		{% if c == 'who' %}{{item.person.name}}
-		{% elif c == 'coffee' %}{{item.coffee.name}}
+		{% elif c == 'coffee' %}<span class="coffee" data-coffeeid="{{item.coffee.id}}">{{item.coffee.name}}</span>
 		{% elif c == 'quantity' %}{{item.quantity}}
 		{% elif c == 'size' %}{{item.size}}#
 		{% elif c == 'personal' %}{{item.personal}}

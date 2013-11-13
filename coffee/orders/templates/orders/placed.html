@@ -32,7 +32,7 @@
 		<div class="mt1m">
 			{% regroup sorteditems_coffee by coffee as itemsbycoffee %}
 			{% for coffee in itemsbycoffee %}
-			<strong>{{coffee.grouper}}</strong>
+			<strong class="coffee" data-coffeeid="{{coffee.grouper.id}}">{{coffee.grouper}}</strong>
 			<div class="ml1m">
 				{% coffee_values coffee.list %}
 			</div>

@@ -81,10 +81,10 @@ class Order(models.Model):
 		return self.team_total() / (self.team.person_set.count() or 1)
 
 	def total_remaining(self):
-		return self.grand_total() - self.total_paid()
+		return self.grand_total() - (self.total_paid() or 0)
 
 	def total_paid(self):
-		return self.payment_set.aggregate(Sum('paid'))['paid__sum']
+		return self.payment_set.aggregate(Sum('paid'))['paid__sum'] or 0.0
 
 	def __unicode__(self):
 		return self.name

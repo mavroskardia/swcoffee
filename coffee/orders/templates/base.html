@@ -53,7 +53,17 @@
 	<script type="text/javascript" src="{% static 'orders/js/jquery.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'orders/js/bootstrap.js' %}"></script>
 	<script type="text/javascript" src="{% static 'orders/js/jquery.tablesorter.min.js' %}"></script>
-	
+	<script type="text/javascript" src="{% static 'orders/js/coffee_overlay.js' %}"></script>
+
 	{% block extrascript %}{% endblock %}
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('.coffee').each(function () {
+				var co = new CoffeeOverlay(this);
+				co.attach_events();
+			});
+		});
+	</script
 </body>
 </html>
