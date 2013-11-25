@@ -26,7 +26,7 @@ table.payments .positive { color: #090; }
 .mt1m { margin-top: 1em; }
 
 .coffee { border-bottom: dotted 1px #b85f00; }
-.coffee:hover { color: #fff; background-color: #b8bf00; }
+.coffee:hover { color: #fff; background-color: #b85f00; }
 
 .pointer { cursor: pointer; }
 .wait { cursor: help; }
@@ -44,6 +44,6 @@ table.payments .positive { color: #090; }
 	overflow: auto;
 }
 
-.overlay_contents h2 { font-size: 100%; margin: 0 0 1em 0; padding: 0; }
-
-.overlay_contents img { margin-right: 1em; }
+.overlay_contents h2 { font-size: 120%; margin: 0 0 1em 0; padding: 0; }
+.overlay_contents p { font-weight: normal; }
+.overlay_contents img { margin-right: 1em; border: solid 1px #888; padding: 1px; }
