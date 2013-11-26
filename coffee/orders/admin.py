@@ -6,7 +6,7 @@ class OrderItemInline(admin.TabularInline):
 	extra = 1
 
 class OrderAdmin(admin.ModelAdmin):
-	fields = ['name', 'team', 'placed']
+	fields = ['name', 'team', 'placed', 'closed']
 	inlines = [OrderItemInline]
 	list_display = ('name', 'team', 'date')
 	list_filter = ['date']
