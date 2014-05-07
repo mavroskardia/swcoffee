@@ -18,6 +18,12 @@ class Person(models.Model):
 	name = models.CharField(max_length=128)
 	team = models.ForeignKey(Team)
 
+	def amount_owed_for_order(self, order):
+		owed = sum([oi.value() for oi in order.orderitem_set.filter(personal=True,person=self)])
+		if order.team == self.team:
+			owed += order.team_individual_contribution()
+		return owed
+
 	def __unicode__(self):
 		return self.name
 	def __str__(self):
