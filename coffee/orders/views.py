@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render, get_object_or_404
 from django.db import IntegrityError
 from django.contrib import messages
-from orders.models import Order,Team,Person,Coffee,OrderItem
+from orders.models import Order,Team,Person,Coffee,OrderItem,Payment
 from orders.forms import OrderForm,OrderItemForm,TeamForm,CoffeeForm,PersonForm
 
 import orders.sweetwaterscraper
@@ -126,6 +126,7 @@ def close(req, order_id):
 	if req.method == 'POST':
 		o = get_object_or_404(Order, pk=order_id)
 		o.closed = True
+		generate_payments(o)
 		o.save()
 
 		return HttpResponseRedirect(reverse('orders:closed', args=(order_id,)))
@@ -210,6 +211,20 @@ def people(req):
 			'pf': pf
 		}
 	)
+
+def generate_payments(order):
+	people = set()
+
+	for p in order.team.person_set.all():
+		people.add(p)
+
+	for oi in order.orderitem_set.filter(personal=True):
+		if oi.person.team != order.team:
+			people.add(oi.person)
+
+	for p in people:
+		payment = Payment(person=p, order=order, owed=p.amount_owed_for_order(order))
+		payment.save()
 
 def generate_coffee(req):
 	def create_coffee(coffee):
