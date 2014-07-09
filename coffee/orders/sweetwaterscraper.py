@@ -44,14 +44,19 @@ def scrape(update_function=None):
 			name = atags[0]['title']
 			desc = ' '.join([i for i in cell.contents if isinstance(i, str) and i != '\n']).encode('utf-8')
 			prices = [e.get_text().strip().split(' ')[-1] for e in cell.find_all('select')[0].find_all('option')]
-			
+
 			text.append((name, desc, prices))
 
 		pagecoffee = list(zip(pics, text))
 
+		print('page data:\n %s' % pagecoffee)
+
 		for p in pagecoffee:
 			image_data = get_image_data(p[0]['src'].replace('_thumb', ''))
-			coffee.append(make_coffee((p[1][0], p[1][1], p[1][2][0], p[1][2][1], p[1][2][2], image_data)))
+			prices = p[1][2]
+			if len(prices) < 3:
+				prices = ['$12.95','$24.15','$59.15']
+			coffee.append(make_coffee((p[1][0], p[1][1], prices[0], prices[1], prices[2], image_data)))
 			if update_function:
 				update_function(coffee[-1])
 
