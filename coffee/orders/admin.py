@@ -16,8 +16,13 @@ class OrderAdmin(admin.ModelAdmin):
 class CoffeeAdmin(admin.ModelAdmin):
 	list_display = ('name', 'one_pound_price', 'two_pound_price', 'five_pound_price', 'active')
 
+class PaymentAdmin(admin.ModelAdmin):
+	list_display = ('order', 'person', 'owed', 'paid')
+	list_filter = ('order',)
+	search_fields = ('order__name','person__name',)
+
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Team)
 admin.site.register(Person)
 admin.site.register(Coffee, CoffeeAdmin)
-admin.site.register(Payment)
+admin.site.register(Payment, PaymentAdmin)
