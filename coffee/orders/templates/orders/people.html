@@ -23,14 +23,28 @@
 {% if people %}
 <div class="col-12 col-lg-7">
 	<h3>Existing People</h3>
-	<ul class="nav nav-pills nav-stacked">
-	{% for person in people %}
-		<li>
-			<h4>{{ person.name }} <small>{{ person.team }}</small></h4>
-		</li>
-	{% endfor %}
-	</ul>
+	<table class="table table-striped">
+		<thead>
+			<tr><th>Name</th><th>Team</th></tr>
+		</thead>
+		<tbody>
+		{% for person in people %}
+			<tr>
+				<td>{{ person.name }}</td><td>{{ person.team }}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
 </div>
 {% endif %}
 
+{% endblock %}
+
+
+{% block extrascript %}
+	<script>
+		$(document).ready(function () {
+			$('table').tablesorter();
+		});
+	</script>
 {% endblock %}
