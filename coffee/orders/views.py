@@ -1,3 +1,5 @@
+import decimal
+
 import django.utils.timezone
 
 from django.http import HttpResponseRedirect, HttpResponse
@@ -223,7 +225,14 @@ def generate_payments(order):
 			people.add(oi.person)
 
 	for p in people:
-		payment = Payment(person=p, order=order, owed=p.amount_owed_for_order(order))
+		# determine if there is any back-payment/credit
+		previous_payments = Payment.objects.filter(person=p)
+		old_amount = decimal.Decimal(0)
+		for pp in previous_payments:
+			old_amount -= (pp.owed - pp.paid)
+
+		owed = p.amount_owed_for_order(order) - old_amount
+		payment = Payment(person=p, order=order, owed=owed)
 		payment.save()
 
 def generate_coffee(req):
